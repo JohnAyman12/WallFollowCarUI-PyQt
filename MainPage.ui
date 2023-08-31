@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1103</width>
-    <height>858</height>
+    <width>1099</width>
+    <height>841</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -166,7 +166,10 @@
            <item row="0" column="0">
             <layout class="QVBoxLayout" name="verticalLayout_3">
              <item>
-              <widget class="QLabel" name="label">
+              <widget class="QLabel" name="camerFeed">
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
                <property name="text">
                 <string>Camera Feed will be placed here</string>
                </property>
@@ -176,7 +179,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="pushButton_4">
+              <widget class="QPushButton" name="screenShotBtn">
                <property name="text">
                 <string>Screen Shot</string>
                </property>
@@ -194,7 +197,7 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_6">
            <item row="0" column="0">
-            <widget class="QLabel" name="label_2">
+            <widget class="QLabel" name="logoLbl">
              <property name="text">
               <string>Team Logo will be placed here</string>
              </property>
@@ -213,14 +216,40 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_8">
            <item row="0" column="0">
-            <widget class="QLabel" name="label_3">
-             <property name="text">
-              <string>motion control arrows will be places here</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QPushButton" name="leftBtn">
+               <property name="text">
+                <string>Left</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="verticalLayout_8">
+               <item>
+                <widget class="QPushButton" name="forwardBtn">
+                 <property name="text">
+                  <string>Forward</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="backwardBtn">
+                 <property name="text">
+                  <string>Backward</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <widget class="QPushButton" name="rightBtn">
+               <property name="text">
+                <string>Right</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -238,16 +267,26 @@
            <item row="0" column="0">
             <layout class="QGridLayout" name="gridLayout_3">
              <item row="0" column="0">
-              <widget class="QSpinBox" name="spinBox"/>
+              <widget class="QSpinBox" name="speedSpinBox">
+               <property name="readOnly">
+                <bool>false</bool>
+               </property>
+               <property name="maximum">
+                <number>255</number>
+               </property>
+              </widget>
              </item>
              <item row="1" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_2">
                <item>
-                <widget class="QRadioButton" name="radioButton_2">
+                <widget class="QRadioButton" name="lowSpeedRadioBtn">
                  <property name="text">
                   <string>Low</string>
                  </property>
                  <property name="checkable">
+                  <bool>false</bool>
+                 </property>
+                 <property name="checked">
                   <bool>false</bool>
                  </property>
                  <property name="autoExclusive">
@@ -256,7 +295,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButton_3">
+                <widget class="QRadioButton" name="midSpeedRadioBtn">
                  <property name="text">
                   <string>Mid</string>
                  </property>
@@ -266,7 +305,7 @@
                 </widget>
                </item>
                <item>
-                <widget class="QRadioButton" name="radioButton">
+                <widget class="QRadioButton" name="highSpeedRadioBtn">
                  <property name="text">
                   <string>High</string>
                  </property>
