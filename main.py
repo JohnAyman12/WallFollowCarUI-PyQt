@@ -9,61 +9,77 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         # initializing the main window
-        self.mainWindow = mainPage()
-        self.mainWindow.setupUi(self)
+        self.main_window = mainPage()
+        self.main_window.setupUi(self)
 
         # initializing IP task 1 window
         self.window2 = QMainWindow()
-        self.task1Window = task1()
-        self.task1Window.setupUi(self.window2)
+        self.task1_window = task1()
+        self.task1_window.setupUi(self.window2)
 
-        self.mainWindow.task1Btn.clicked.connect(self.openTask1Page)  # setting task-1 page event
+        self.main_window.task1Btn.clicked.connect(self.open_task1_page)  # setting task-1 page event
 
         # setting main page camera feed
         self.camera = cameraFeed()
         self.camera.start()
-        self.camera.ImageUpdate.connect(self.imageUpdateSlot)
-        self.mainWindow.screenShotBtn.clicked.connect(self.camera.savePhoto)
+        self.camera.ImageUpdate.connect(self.image_update_slot)
+        self.main_window.screenShotBtn.clicked.connect(self.camera.savePhoto)
 
         # setting team logo part in main window
         pixmap = QPixmap("images\\teamLogo.png")
-        self.mainWindow.logoLbl.setPixmap(pixmap)
+        self.main_window.logoLbl.setPixmap(pixmap)
 
-        # setting control buttons slots
-        self.mainWindow.forwardBtn.pressed.connect(self.moveForward)
-        self.mainWindow.backwardBtn.pressed.connect(self.moveBackward)
-        self.mainWindow.rightBtn.pressed.connect(self.moveRight)
-        self.mainWindow.leftBtn.pressed.connect(self.moveLeft)
+        # setting motion control buttons slots
+        self.main_window.forwardBtn.pressed.connect(self.move_forward)
+        self.main_window.backwardBtn.pressed.connect(self.move_backward)
+        self.main_window.rightBtn.pressed.connect(self.move_right)
+        self.main_window.leftBtn.pressed.connect(self.move_left)
 
-        self.mainWindow.speedSpinBox.valueChanged.connect(self.speedValueChanged)
+        # setting speed control part
+        self.main_window.lowSpeedRadioBtn.clicked.connect(self.low_speed)
+        self.main_window.midSpeedRadioBtn.clicked.connect(self.mid_speed)
+        self.main_window.highSpeedRadioBtn.clicked.connect(self.high_speed)
+        self.main_window.speedSpinBox.valueChanged.connect(self.speed_value_changed)
 
-    def imageUpdateSlot(self, Image):  # shows camera feed (always running)
-        self.mainWindow.camerFeed.setPixmap(QPixmap.fromImage(Image))
+    def image_update_slot(self, Image):  # shows camera feed (always running)
+        self.main_window.camerFeed.setPixmap(QPixmap.fromImage(Image))
 
-    def openTask1Page(self):  # opens task-1 page when called
+    def open_task1_page(self):  # opens task-1 page when called
         self.window2.show()
 
-    def moveForward(self):
+    def move_forward(self):
         print("Forward")
 
-    def moveBackward(self):
+    def move_backward(self):
         print("Backward")
 
-    def moveRight(self):
+    def move_right(self):
         print("Right")
 
-    def moveLeft(self):
+    def move_left(self):
         print("Left")
 
-    def speedValueChanged(self):
-        speed = self.mainWindow.speedSpinBox.value()
+    def low_speed(self):
+        self.main_window.speedSpinBox.setValue(85)
+
+    def mid_speed(self):
+        self.main_window.speedSpinBox.setValue(170)
+
+    def high_speed(self):
+        self.main_window.speedSpinBox.setValue(255)
+
+    def speed_value_changed(self):
+        speed = self.main_window.speedSpinBox.value()
         print(speed)
         if speed <= 85:
             print("Low")
+            self.main_window.lowSpeedRadioBtn.setChecked(True)
         elif speed <= 170:
             print("Mid")
+            self.main_window.midSpeedRadioBtn.setChecked(True)
         else:
             print("High")
+            self.main_window.highSpeedRadioBtn.setChecked(True)
 
 if __name__ == '__main__':
     app = QApplication([])
