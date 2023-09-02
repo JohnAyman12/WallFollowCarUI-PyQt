@@ -14,7 +14,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
+        MainWindow.setWindowModality(QtCore.Qt.NonModal)
         MainWindow.resize(800, 600)
+        MainWindow.setAnimated(True)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
@@ -63,7 +65,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Task 1"))
         self.label.setText(_translate("MainWindow", "Input 1"))
         self.label_2.setText(_translate("MainWindow", "Input 2"))
         self.label_3.setText(_translate("MainWindow", "Output"))

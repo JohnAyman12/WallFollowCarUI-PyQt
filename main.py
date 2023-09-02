@@ -11,16 +11,36 @@ from cameraFeed import Worker1 as cameraFeed
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowIcon(QIcon('player.png'))
         # initializing the main window
         self.main_window = mainPage()
         self.main_window.setupUi(self)
 
         # initializing IP task 1 window
         self.window2 = QMainWindow()
-        self.window2.setWindowTitle("Task 1")
         self.task1_window = task1()
         self.task1_window.setupUi(self.window2)
+
+        # setting main page camera feed
+        self.camera = cameraFeed()
+        self.camera.start()
+        self.camera.ImageUpdate.connect(self.image_update_slot)
+        self.main_window.screenShotBtn.clicked.connect(self.camera.savePhoto)
+
+        # setting team logo part in main window
+        pixmap = QPixmap("images\\teamLogo.png")
+        self.main_window.logoLbl.setPixmap(pixmap)
+
+        # setting motion control buttons slots
+        self.main_window.forwardBtn.pressed.connect(self.move_forward)
+        self.main_window.backwardBtn.pressed.connect(self.move_backward)
+        self.main_window.rightBtn.pressed.connect(self.move_right)
+        self.main_window.leftBtn.pressed.connect(self.move_left)
+
+        # setting speed control part
+        self.main_window.lowSpeedRadioBtn.clicked.connect(self.low_speed)
+        self.main_window.midSpeedRadioBtn.clicked.connect(self.mid_speed)
+        self.main_window.highSpeedRadioBtn.clicked.connect(self.high_speed)
+        self.main_window.speedSpinBox.valueChanged.connect(self.speed_value_changed)
 
         # setting video players for IP task 1
         self.vid_widget1 = QVideoWidget()
@@ -47,29 +67,8 @@ class MainWindow(QMainWindow):
         self.main_window.task1Btn.clicked.connect(self.open_task1_page)  # opening task-1 page event
         self.task1_window.exitButton.clicked.connect(self.close_task1_page)  # closing task-1 page event
 
-        # setting main page camera feed
-        self.camera = cameraFeed()
-        self.camera.start()
-        self.camera.ImageUpdate.connect(self.image_update_slot)
-        self.main_window.screenShotBtn.clicked.connect(self.camera.savePhoto)
-
-        # setting team logo part in main window
-        pixmap = QPixmap("images\\teamLogo.png")
-        self.main_window.logoLbl.setPixmap(pixmap)
-
-        # setting motion control buttons slots
-        self.main_window.forwardBtn.pressed.connect(self.move_forward)
-        self.main_window.backwardBtn.pressed.connect(self.move_backward)
-        self.main_window.rightBtn.pressed.connect(self.move_right)
-        self.main_window.leftBtn.pressed.connect(self.move_left)
-
-        # setting speed control part
-        self.main_window.lowSpeedRadioBtn.clicked.connect(self.low_speed)
-        self.main_window.midSpeedRadioBtn.clicked.connect(self.mid_speed)
-        self.main_window.highSpeedRadioBtn.clicked.connect(self.high_speed)
-        self.main_window.speedSpinBox.valueChanged.connect(self.speed_value_changed)
-
         self.task1_page_opened = False # to detect if task 1 page opened or not
+
     def image_update_slot(self, Image):  # shows camera feed (always running)
         self.main_window.camerFeed.setPixmap(QPixmap.fromImage(Image))
 
