@@ -39,7 +39,7 @@
                 <item row="0" column="0">
                  <layout class="QHBoxLayout" name="horizontalLayout_4">
                   <item>
-                   <widget class="QLabel" name="label_4">
+                   <widget class="QLabel" name="ultrasonicLbl">
                     <property name="text">
                      <string>UltraSonic</string>
                     </property>
@@ -66,7 +66,7 @@
                 <item row="0" column="0">
                  <layout class="QHBoxLayout" name="horizontalLayout_5">
                   <item>
-                   <widget class="QLabel" name="label_5">
+                   <widget class="QLabel" name="currentLbl">
                     <property name="text">
                      <string>Current</string>
                     </property>
@@ -93,7 +93,7 @@
                 <item row="0" column="0">
                  <layout class="QHBoxLayout" name="horizontalLayout_6">
                   <item>
-                   <widget class="QLabel" name="label_6">
+                   <widget class="QLabel" name="voltageLbl">
                     <property name="text">
                      <string>Voltage</string>
                     </property>
@@ -325,7 +325,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox_8">
+         <widget class="QGroupBox" name="motionModeBox">
           <property name="title">
            <string>Motion Mode</string>
           </property>
@@ -361,7 +361,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QGroupBox" name="groupBox_7">
+         <widget class="QGroupBox" name="connectivityBox">
           <property name="title">
            <string>Connectivity</string>
           </property>
