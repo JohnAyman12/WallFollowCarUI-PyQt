@@ -40,6 +40,8 @@ class MainWindow(QMainWindow):
         self.task1_window = Task1()
         self.task1_window.setupUi(self.window2)
 
+        self.window2.setWindowFlag(Qt.WindowCloseButtonHint, False)  # disables task-1 window default close button
+
         # modifying task-1 page appearance
         self.window2.setStyleSheet("background-color: #001522;")
         self.task1_window.input1Lbl.setStyleSheet('color: white')
@@ -96,8 +98,6 @@ class MainWindow(QMainWindow):
 
         self.task1_page_opened = False  # to detect if task 1 page opened or not
 
-        self.window2.setWindowFlag(Qt.WindowCloseButtonHint, False)
-
     def closeEvent(self, event):  # closes task-1 page when main page is closed
         self.window2.close()
 
@@ -126,32 +126,30 @@ class MainWindow(QMainWindow):
             print("High")
             self.main_window.highSpeedRadioBtn.setChecked(True)
 
-    def keyPressEvent(self, event):
-        if event.key() > 1000:
-            print("Make keyboard english, please!")
-        if event.key() == 87:
+    def keyPressEvent(self, event):  # controls the motion of the car using keyboard
+        if event.key() == 87 or event.key() == 1589:
             print("Forward")
             self.main_window.forwardBtn.animateClick()
-        elif event.key() == 83:
+        elif event.key() == 83 or event.key() == 1587:
             print("Backward")
             self.main_window.backwardBtn.animateClick()
-        elif event.key() == 68:
+        elif event.key() == 68 or event.key() == 1610:
             print("Right")
             self.main_window.rightBtn.animateClick()
-        elif event.key() == 65:
+        elif event.key() == 65 or event.key() == 1588:
             print("Left")
             self.main_window.leftBtn.animateClick()
 
-    def forward_btn_clicked(self):
+    def forward_btn_clicked(self):  # moves the car forward using UI buttons
         print("Forward")
 
-    def backward_btn_clicked(self):
+    def backward_btn_clicked(self):  # moves the car backward using UI buttons
         print("Backward")
 
-    def right_btn_clicked(self):
+    def right_btn_clicked(self):  # turns the car right using UI buttons
         print("Right")
 
-    def left_btn_clicked(self):
+    def left_btn_clicked(self):  # turns the car left using UI buttons
         print("Left")
 
     def open_task1_page(self):  # opens task-1 page when called
