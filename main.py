@@ -20,9 +20,17 @@ class MainWindow(QMainWindow):
         self.setStyleSheet("background-color: #001522;")
         self.main_window.sensorReadingBox.setStyleSheet('color: white')
         self.main_window.ipTasksBox.setStyleSheet('color: white')
+        self.main_window.task1Btn.setStyleSheet('background-color: white; color: #001522')
+        self.main_window.task2Btn.setStyleSheet('background-color: white; color: #001522')
+        self.main_window.task3Btn.setStyleSheet('background-color: white; color: #001522')
         self.main_window.cameraFeedBox.setStyleSheet('color: white')
+        self.main_window.screenShotBtn.setStyleSheet('background-color: white; color: #001522')
         self.main_window.teamLogoBox.setStyleSheet('color: white')
         self.main_window.motionControlBox.setStyleSheet('color: white')
+        self.main_window.forwardBtn.setStyleSheet('background-color: white; color: #001522')
+        self.main_window.backwardBtn.setStyleSheet('background-color: white; color: #001522')
+        self.main_window.rightBtn.setStyleSheet('background-color: white; color: #001522')
+        self.main_window.leftBtn.setStyleSheet('background-color: white; color: #001522')
         self.main_window.speedControlBox.setStyleSheet('color: white')
         self.main_window.motionModeBox.setStyleSheet('color: white')
         self.main_window.connectivityBox.setStyleSheet('color: white')
@@ -37,7 +45,7 @@ class MainWindow(QMainWindow):
         self.task1_window.input1Lbl.setStyleSheet('color: white')
         self.task1_window.input2Lbl.setStyleSheet('color: white')
         self.task1_window.outputLbl.setStyleSheet('color: white')
-        self.task1_window.exitButton.setStyleSheet('color: white')
+        self.task1_window.exitButton.setStyleSheet('background-color: white; color: #001522')
 
         # setting main page camera feed
         self.camera = cameraFeed()
@@ -87,6 +95,11 @@ class MainWindow(QMainWindow):
         self.task1_window.exitButton.clicked.connect(self.close_task1_page)  # closing task-1 page event
 
         self.task1_page_opened = False  # to detect if task 1 page opened or not
+
+        self.window2.setWindowFlag(Qt.WindowCloseButtonHint, False)
+
+    def closeEvent(self, event):  # closes task-1 page when main page is closed
+        self.window2.close()
 
     def image_update_slot(self, image):  # shows camera feed (always running)
         self.main_window.camerFeed.setPixmap(QPixmap.fromImage(image))
