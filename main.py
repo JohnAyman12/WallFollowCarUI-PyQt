@@ -6,12 +6,15 @@ from PyQt5.QtCore import *
 
 from MainPage import Ui_MainWindow as mainPage
 from Task1Page import Ui_MainWindow as Task1
+from Task2Page import Ui_MainWindow as Task2
 from cameraFeed import Worker1 as cameraFeed
+from communication import Communication
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+
         # initializing the main window
         self.main_window = mainPage()
         self.main_window.setupUi(self)
@@ -49,7 +52,20 @@ class MainWindow(QMainWindow):
         self.task1_window.outputLbl.setStyleSheet('color: white')
         self.task1_window.exitButton.setStyleSheet('background-color: white; color: #001522')
 
+        # initializing IP task 2 window
+        self.window3 = QMainWindow()
+        self.task2_window = Task2()
+        self.task2_window.setupUi(self.window3)
+
+        self.window3.setWindowFlag(Qt.WindowCloseButtonHint, False)  # disables task-2 window default close button
+
+        # modifying task-2 page appearance
+        self.window3.setStyleSheet("background-color: #001522;")
+        self.task2_window.stereoLbl.setStyleSheet('color: white')
+        self.task2_window.exitButton.setStyleSheet('background-color: white; color: #001522')
+
         # setting main page camera feed
+        self.cameraThread = QThread()
         self.camera = cameraFeed()
         self.camera.start()
         self.camera.ImageUpdate.connect(self.image_update_slot)
@@ -76,30 +92,38 @@ class MainWindow(QMainWindow):
         self.task1_window.vid1VLayout.addWidget(self.vid_widget1)
         self.media_player1 = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.media_player1.setVideoOutput(self.vid_widget1)
-        self.media_player1.setMedia(QMediaContent(QUrl.fromLocalFile("images\\IP_vid.mp4")))
+        self.media_player1.setMedia(QMediaContent(QUrl.fromLocalFile("images\\input1.mp4")))
         self.media_player1.stateChanged.connect(self.mediastate1_changed)
 
         self.vid_widget2 = QVideoWidget()
         self.task1_window.vid2VLayout.addWidget(self.vid_widget2)
         self.media_player2 = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.media_player2.setVideoOutput(self.vid_widget2)
-        self.media_player2.setMedia(QMediaContent(QUrl.fromLocalFile("images\\IP_vid.mp4")))
-        self.media_player1.stateChanged.connect(self.mediastate2_changed)
+        self.media_player2.setMedia(QMediaContent(QUrl.fromLocalFile("images\\input2.mp4")))
+        self.media_player2.stateChanged.connect(self.mediastate2_changed)
 
         self.vid_widget3 = QVideoWidget()
         self.task1_window.outputVidHLayout.addWidget(self.vid_widget3)
         self.media_player3 = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.media_player3.setVideoOutput(self.vid_widget3)
-        self.media_player3.setMedia(QMediaContent(QUrl.fromLocalFile("images\\IP_vid.mp4")))
-        self.media_player1.stateChanged.connect(self.mediastate3_changed)
+        self.media_player3.setMedia(QMediaContent(QUrl.fromLocalFile("images\\output_video.avi")))
+        self.media_player3.stateChanged.connect(self.mediastate3_changed)
 
         self.main_window.task1Btn.clicked.connect(self.open_task1_page)  # opening task-1 page event
         self.task1_window.exitButton.clicked.connect(self.close_task1_page)  # closing task-1 page event
 
+        self.main_window.task2Btn.clicked.connect(self.open_task2_page)  # opening task-1 page event
+        self.task2_window.exitButton.clicked.connect(self.close_task2_page)  # closing task-1 page event
+
         self.task1_page_opened = False  # to detect if task 1 page opened or not
+
+        # initializing communication thread
+        self.communication = Communication()
+        self.communication.start()
 
     def closeEvent(self, event):  # closes task-1 page when main page is closed
         self.window2.close()
+        self.window3.close()
 
     def image_update_slot(self, image):  # shows camera feed (always running)
         self.main_window.camerFeed.setPixmap(QPixmap.fromImage(image))
@@ -177,6 +201,12 @@ class MainWindow(QMainWindow):
     def mediastate3_changed(self):  # puts output video in loop ONLY when task 1 page is opened
         if self.media_player3.state() == QMediaPlayer.StoppedState and self.task1_page_opened:
             self.media_player3.play()
+
+    def open_task2_page(self):  # opens task-2 page when called
+        self.window3.show()
+
+    def close_task2_page(self):  # closes task-2 page
+        self.window3.close()
 
 
 if __name__ == '__main__':

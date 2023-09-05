@@ -65,7 +65,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Task 1"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Task 1 - Video Stitching"))
         self.input1Lbl.setText(_translate("MainWindow", "Input 1"))
         self.input2Lbl.setText(_translate("MainWindow", "Input 2"))
         self.outputLbl.setText(_translate("MainWindow", "Output"))

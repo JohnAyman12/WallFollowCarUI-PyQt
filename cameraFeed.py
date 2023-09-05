@@ -56,6 +56,7 @@ class Worker1(QThread):
         self.quit()
 
     def savePhoto(self):
+        print("save")
         img, image = self.Capture.read()
         """ This function will save the image"""
         self.filename = 'Snapshot ' + str(time.strftime("%Y-%b-%d at %H.%M.%S %p")) + '.png'

@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Task 1</string>
+   <string>Task 1 - Video Stitching</string>
   </property>
   <property name="animated">
    <bool>true</bool>
